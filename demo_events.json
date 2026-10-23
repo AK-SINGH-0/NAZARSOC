@@ -1,0 +1,307 @@
+[
+  {
+    "_comment": "=== SYNTHETIC DATA — for testing and demonstration only ===",
+    "_note": "All IPs are from IANA documentation ranges (RFC 5737 / RFC 3849). No real user data."
+  },
+
+  {
+    "_section": "--- Normal successful logins (should NOT trigger any alert) ---"
+  },
+  {
+    "event_id": "EVT-001",
+    "timestamp": "2024-01-15T09:00:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "192.0.2.10",
+    "username": "alice",
+    "event_type": "authentication",
+    "outcome": "success",
+    "hostname": "web-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-001"
+  },
+  {
+    "event_id": "EVT-002",
+    "timestamp": "2024-01-15T09:05:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "192.0.2.11",
+    "username": "bob",
+    "event_type": "authentication",
+    "outcome": "success",
+    "hostname": "web-02",
+    "source_reference": "syslog",
+    "import_batch": "batch-001"
+  },
+  {
+    "event_id": "EVT-003",
+    "timestamp": "2024-01-15T09:10:00Z",
+    "source_type": "windows_event",
+    "source_ip": "192.0.2.12",
+    "username": "charlie",
+    "event_type": "logon",
+    "outcome": "success",
+    "hostname": "dc-01",
+    "source_reference": "windows_event_log",
+    "import_batch": "batch-001"
+  },
+
+  {
+    "_section": "--- Isolated failures that should NOT trigger alerts (count < threshold) ---"
+  },
+  {
+    "event_id": "EVT-010",
+    "timestamp": "2024-01-15T09:15:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "192.0.2.20",
+    "username": "alice",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "web-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-001"
+  },
+  {
+    "event_id": "EVT-011",
+    "timestamp": "2024-01-15T09:16:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "192.0.2.20",
+    "username": "alice",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "web-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-001"
+  },
+  {
+    "event_id": "EVT-012",
+    "timestamp": "2024-01-15T09:17:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "192.0.2.20",
+    "username": "alice",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "web-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-001"
+  },
+  {
+    "event_id": "EVT-013",
+    "timestamp": "2024-01-15T09:18:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "192.0.2.20",
+    "username": "alice",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "web-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-001"
+  },
+
+  {
+    "_section": "--- Rule A: Brute force on user 'dave' from 198.51.100.50 (≥5 failures in 5 min) ---"
+  },
+  {
+    "event_id": "EVT-100",
+    "timestamp": "2024-01-15T10:00:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "198.51.100.50",
+    "username": "dave",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "vpn-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-002"
+  },
+  {
+    "event_id": "EVT-101",
+    "timestamp": "2024-01-15T10:01:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "198.51.100.50",
+    "username": "dave",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "vpn-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-002"
+  },
+  {
+    "event_id": "EVT-102",
+    "timestamp": "2024-01-15T10:02:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "198.51.100.50",
+    "username": "dave",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "vpn-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-002"
+  },
+  {
+    "event_id": "EVT-103",
+    "timestamp": "2024-01-15T10:03:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "198.51.100.50",
+    "username": "dave",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "vpn-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-002"
+  },
+  {
+    "event_id": "EVT-104",
+    "timestamp": "2024-01-15T10:04:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "198.51.100.50",
+    "username": "dave",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "vpn-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-002"
+  },
+
+  {
+    "_section": "--- Rule B: Password spray from 203.0.113.77 (≥10 failures, ≥5 users, 10 min) ---"
+  },
+  {
+    "event_id": "EVT-200", "timestamp": "2024-01-15T11:00:00Z",
+    "source_type": "windows_event", "source_ip": "203.0.113.77",
+    "username": "user01", "event_type": "logon", "outcome": "failure",
+    "hostname": "dc-01", "source_reference": "windows_event_log", "import_batch": "batch-003"
+  },
+  {
+    "event_id": "EVT-201", "timestamp": "2024-01-15T11:01:00Z",
+    "source_type": "windows_event", "source_ip": "203.0.113.77",
+    "username": "user02", "event_type": "logon", "outcome": "failure",
+    "hostname": "dc-01", "source_reference": "windows_event_log", "import_batch": "batch-003"
+  },
+  {
+    "event_id": "EVT-202", "timestamp": "2024-01-15T11:02:00Z",
+    "source_type": "windows_event", "source_ip": "203.0.113.77",
+    "username": "user03", "event_type": "logon", "outcome": "failure",
+    "hostname": "dc-01", "source_reference": "windows_event_log", "import_batch": "batch-003"
+  },
+  {
+    "event_id": "EVT-203", "timestamp": "2024-01-15T11:03:00Z",
+    "source_type": "windows_event", "source_ip": "203.0.113.77",
+    "username": "user04", "event_type": "logon", "outcome": "failure",
+    "hostname": "dc-01", "source_reference": "windows_event_log", "import_batch": "batch-003"
+  },
+  {
+    "event_id": "EVT-204", "timestamp": "2024-01-15T11:04:00Z",
+    "source_type": "windows_event", "source_ip": "203.0.113.77",
+    "username": "user05", "event_type": "logon", "outcome": "failure",
+    "hostname": "dc-01", "source_reference": "windows_event_log", "import_batch": "batch-003"
+  },
+  {
+    "event_id": "EVT-205", "timestamp": "2024-01-15T11:05:00Z",
+    "source_type": "windows_event", "source_ip": "203.0.113.77",
+    "username": "user06", "event_type": "logon", "outcome": "failure",
+    "hostname": "dc-01", "source_reference": "windows_event_log", "import_batch": "batch-003"
+  },
+  {
+    "event_id": "EVT-206", "timestamp": "2024-01-15T11:06:00Z",
+    "source_type": "windows_event", "source_ip": "203.0.113.77",
+    "username": "user07", "event_type": "logon", "outcome": "failure",
+    "hostname": "dc-01", "source_reference": "windows_event_log", "import_batch": "batch-003"
+  },
+  {
+    "event_id": "EVT-207", "timestamp": "2024-01-15T11:07:00Z",
+    "source_type": "windows_event", "source_ip": "203.0.113.77",
+    "username": "user08", "event_type": "logon", "outcome": "failure",
+    "hostname": "dc-01", "source_reference": "windows_event_log", "import_batch": "batch-003"
+  },
+  {
+    "event_id": "EVT-208", "timestamp": "2024-01-15T11:08:00Z",
+    "source_type": "windows_event", "source_ip": "203.0.113.77",
+    "username": "user09", "event_type": "logon", "outcome": "failure",
+    "hostname": "dc-01", "source_reference": "windows_event_log", "import_batch": "batch-003"
+  },
+  {
+    "event_id": "EVT-209", "timestamp": "2024-01-15T11:09:00Z",
+    "source_type": "windows_event", "source_ip": "203.0.113.77",
+    "username": "user10", "event_type": "logon", "outcome": "failure",
+    "hostname": "dc-01", "source_reference": "windows_event_log", "import_batch": "batch-003"
+  },
+
+  {
+    "_section": "--- Rule C: Failures then success for 'eve' from 198.51.100.99 ---"
+  },
+  {
+    "event_id": "EVT-300",
+    "timestamp": "2024-01-15T12:00:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "198.51.100.99",
+    "username": "eve",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "app-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-004"
+  },
+  {
+    "event_id": "EVT-301",
+    "timestamp": "2024-01-15T12:02:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "198.51.100.99",
+    "username": "eve",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "app-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-004"
+  },
+  {
+    "event_id": "EVT-302",
+    "timestamp": "2024-01-15T12:04:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "198.51.100.99",
+    "username": "eve",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "app-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-004"
+  },
+  {
+    "event_id": "EVT-303",
+    "timestamp": "2024-01-15T12:06:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "198.51.100.99",
+    "username": "eve",
+    "event_type": "authentication",
+    "outcome": "success",
+    "hostname": "app-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-004"
+  },
+
+  {
+    "_section": "--- Boundary / edge-case events ---"
+  },
+  {
+    "event_id": "EVT-400",
+    "timestamp": "2024-01-15T13:00:00Z",
+    "source_type": "linux_auth",
+    "source_ip": "192.0.2.200",
+    "username": "frank",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "db-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-005"
+  },
+  {
+    "event_id": "EVT-401",
+    "timestamp": "2024-01-15T13:05:01Z",
+    "source_type": "linux_auth",
+    "source_ip": "192.0.2.200",
+    "username": "frank",
+    "event_type": "authentication",
+    "outcome": "failure",
+    "hostname": "db-01",
+    "source_reference": "syslog",
+    "import_batch": "batch-005",
+    "_note": "This event is 1 second outside a 5-minute window from EVT-400"
+  }
+]
