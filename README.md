@@ -178,6 +178,7 @@ Required fields for detection: `event_id`, `timestamp`, `source_ip`, `username`,
 
 ---
 
+More Updates are Coming Soon!
 ## License
 
 Educational use only. Not licensed for production security monitoring.
